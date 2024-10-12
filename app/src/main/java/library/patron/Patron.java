@@ -1,5 +1,5 @@
 package library.patron;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import library.bookManagement.Book;
@@ -10,8 +10,8 @@ public class Patron {
     private String name;
     private String address;
     private String phone;
-    private List<Book> history;
-    private List<Book> activeBooks;
+    List<Book> history;
+    protected List<Book> activeBooks = new ArrayList<Book>();
     
     public Patron(int id, String name, String address, String phone) {
         this.id = id;
@@ -65,8 +65,8 @@ public class Patron {
         this.history = history;
     }
 
-    public void setActiveBooks(List<Book> activeBooks) {
-        this.activeBooks = activeBooks;
+    public void setActiveBooks(Book book) {
+        activeBooks.add(book);
     }
 
     public List<Book> getHistory() {
@@ -76,6 +76,5 @@ public class Patron {
     public List<Book> getActiveBooks() {
         return activeBooks;
     }
-
 
 }

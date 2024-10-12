@@ -17,17 +17,18 @@ public class App {
     public static void main(String[] args) {
     
         AdminControl adminControl = new AdminControl();
-        Book book1 = new Book("Java", "yameen", Genre.FANTASY, 1996, 10, "234235", 1);
+        Book book1 = new Book("Java", "yameen", Genre.FANTASY, 1996, 10, "234235", 3);
         Book book2 = new Book("C++", "abdullah", Genre.HISTORY, 1999, 10, "236258", 12);
         adminControl.addBook(book1);
         adminControl.addBook(book2); 
         
         Patron patron1 = new Patron(1, "Ali", "Lucknow", "123456");
-
+        Patron patron2 = new Patron(2, "Ali", "Lucknow", "123456");
         
         IssueBook issueBook = new IssueBook(patron1);
         issueBook.assign("Java", patron1);
         issueBook.assign("Java", patron1);
         System.out.println(adminControl.toString());
+        System.out.println("Active Books: "+patron2.getActiveBooks());
     }
 }

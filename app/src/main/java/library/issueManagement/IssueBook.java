@@ -1,6 +1,7 @@
 package library.issueManagement;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import admin.AdminControl;
 import library.bookManagement.Book;
@@ -22,10 +23,11 @@ public class IssueBook extends Patron{
     private String returnDate;
 
 
+    @SuppressWarnings("unchecked")
     public void assignBook(Book book, Patron patron){
         if(book.isAvailaible()){
             book.setCopies(book.getCopies()-1);
-            
+            patron.setActiveBooks(book);
             System.out.println("Book is assigned to "+patron.getName());
         }else {
             System.out.println("Book is not available");
