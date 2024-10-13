@@ -27,7 +27,6 @@ public class IssueBook extends Patron implements BookMap{
 
     @SuppressWarnings("unchecked")
     public void assignBook(Book book, Patron patron){
-        System.out.println("getPatron+" + patron.getName());
         if(book.isAvailaible()){
             book.setCopies(book.getCopies()-1);
             patron.setActiveBooks(book);
@@ -50,9 +49,6 @@ public class IssueBook extends Patron implements BookMap{
         
         Book bObj = bookMap.get(isbn);
         Patron pObj = patronMap.get(patronId);
-
-        System.out.println("bObj "+ bObj);
-        System.out.println("pObj "+ pObj);
         assignBook(bObj, pObj);
     }
 

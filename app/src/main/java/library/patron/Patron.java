@@ -87,6 +87,9 @@ public class Patron implements UserList{
         return activeBooks;
     }
 
+    public Patron getObjPatron(int patronId){
+        return patronMap.get(patronId);
+    }
 
     @Override
     public void addPatronToList(Patron patron) {

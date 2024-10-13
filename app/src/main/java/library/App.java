@@ -46,7 +46,7 @@ public class App {
         @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("Choose an option: 1. Add Book 2. Add Patron 3. Issue Book 4. Return Book 5. Exit");
+            System.out.println("Choose an option: 1. Add Book 2. Add Patron 3. Issue Book 4. Return Book 5. View Patron History 6. Exit");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
@@ -96,9 +96,6 @@ public class App {
                 scanner.nextLine(); // Consume newline
                 System.out.println("Enter Book ISBN: ");
                 String isbn = scanner.nextLine();
-                System.out.println("patron "+patron.getName());
-                System.out.println("bookList "+book.getBooks());
-                System.out.println("logs+ "+patron.patronExists(patronId));
                 if(patron.patronExists(patronId) && book.bookExists(isbn)){
                     System.out.println("Patron exists and book details are correct");
                     if(book.getCopies(isbn) > 0){
@@ -114,6 +111,13 @@ public class App {
             } else if (choice == 4) {
                 System.out.println("Returning Book...");
             } else if (choice == 5) {
+                System.out.println("Enter Patron ID: ");
+                int patronId = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+                patron = patron.getObjPatron(patronId);
+                System.out.println("Viewing patron history...");
+                System.out.println(patron.getActiveBooks());                
+            } else if (choice == 6) {
                 System.out.println("Exiting...");
                 break;
             } else {
