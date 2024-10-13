@@ -9,6 +9,9 @@ import library.bookManagement.Genre;
 import library.issueManagement.IssueBook;
 import library.patron.Patron;
 
+import java.util.List;
+import java.util.Scanner;
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -17,18 +20,113 @@ public class App {
     public static void main(String[] args) {
     
         AdminControl adminControl = new AdminControl();
-        Book book1 = new Book("Java", "yameen", Genre.FANTASY, 1996, 10, "234235", 3);
-        Book book2 = new Book("C++", "abdullah", Genre.HISTORY, 1999, 10, "236258", 12);
-        adminControl.addBook(book1);
-        adminControl.addBook(book2); 
+
+        Patron patron = new Patron();
+
+        Patron patron1  = new Patron(1, "Ali", "Lucknow", "123456");
+        Patron patron2  = new Patron(2, "Ankit", "Lucknow", "352562");
+        Patron patron3  = new Patron(3, "Baarbie", "Delhi", "135643");
+        Patron patron4  = new Patron(4, "Baba", "Allahabad", "423562");
+
+        patron.addPatronToList(patron1);
+        patron.addPatronToList(patron2);
+        patron.addPatronToList(patron3);
+        patron.addPatronToList(patron4);
+
+
+        Book book = new Book();
         
-        Patron patron1 = new Patron(1, "Ali", "Lucknow", "123456");
-        Patron patron2 = new Patron(2, "Ali", "Lucknow", "123456");
+        Book book1 = new Book("harry", "jkRowling", Genre.FICTION, 1993, 183, "00001", 3);
+        Book book2 = new Book("potter", "jkRowling", Genre.FICTION, 1999, 123, "00002", 6);
+        Book book3 = new Book("romCom", "Barbara", Genre.ROMANCE, 1995, 167, "00003", 2);
+        Book book4 = new Book("Spirit", "Munsha", Genre.HISTORY, 1998, 122, "00004", 1);
+        Book book5 = new Book("JAVA", "Robert", Genre.NON_FICTION, 2001, 400, "00005", 19);
+
+
+        @SuppressWarnings("resource")
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("Choose an option: 1. Add Book 2. Add Patron 3. Issue Book 4. Return Book 5. Exit");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            if (choice == 1) {
+                System.out.println("Enter book details: ");
+                System.out.print("Title: ");
+                String title = scanner.nextLine();
+                System.out.print("Author: ");
+                String author = scanner.nextLine();
+                System.out.print("Genre: ");
+                Genre genre = Genre.valueOf(scanner.nextLine().toUpperCase());
+                System.out.print("Year: ");
+                int year = scanner.nextInt();
+                System.out.print("Pages: ");
+                int pages = scanner.nextInt();
+                System.out.print("ISBN: ");
+                String isbn = scanner.next();
+                System.out.print("Copies: ");
+                int copies = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+
+                Book newBook = new Book(title, author, genre, year, pages, isbn, copies);
+                adminControl.addBook(newBook);
+                System.out.println("Book added successfully!");
+
+            } else if (choice == 2) {
+                System.out.println("Enter patron details: ");
+                System.out.print("ID: ");
+                int id = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+                System.out.print("Name: ");
+                String name = scanner.nextLine();
+                System.out.print("Address: ");
+                String address = scanner.nextLine();
+                System.out.print("Phone: ");
+                String phone = scanner.nextLine();
+     
+                Patron newPatron = new Patron(id, name, address, phone);
+                newPatron.addPatronToList(newPatron);
+                System.out.println("Patron added successfully!");
+                // System.out.println(newPatron.getPatrons());
+
+            } else if (choice == 3) {
+                System.out.println("Issuing Book...");
+                System.out.println("Enter Patron ID: ");
+                int patronId = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+                System.out.println("Enter Book ISBN: ");
+                String isbn = scanner.nextLine();
+                System.out.println("patron "+patron.getName());
+                System.out.println("bookList "+book.getBooks());
+                System.out.println("logs+ "+patron.patronExists(patronId));
+                if(patron.patronExists(patronId) && book.bookExists(isbn)){
+                    System.out.println("Patron exists and book details are correct");
+                    if(book.getCopies(isbn) > 0){
+                        System.out.println("Book is available");
+                        IssueBook issueBook = new IssueBook();
+                        issueBook.assign(patronId, isbn);
+                    }else{
+                        System.out.println("Book out of stock! sorry");
+                    }
+                }else{
+                    System.out.println("Patron does not exist or book details are incorrect");
+                }
+            } else if (choice == 4) {
+                System.out.println("Returning Book...");
+            } else if (choice == 5) {
+                System.out.println("Exiting...");
+                break;
+            } else {
+                System.out.println("Invalid choice. Please try again.");
+            }
+        } 
         
-        IssueBook issueBook = new IssueBook(patron1);
-        issueBook.assign("Java", patron1);
-        issueBook.assign("Java", patron1);
-        System.out.println(adminControl.toString());
-        System.out.println("Active Books: "+patron2.getActiveBooks());
+
+        // IssueBook issueBook = new IssueBook(patron1);
+        // issueBook.assign("Java", patron1);
+        // issueBook.assign("C++", patron1);
+        System.out.println("admin "+adminControl.toString());
+        // System.out.println("Active Books for user "+patron1.getName() + " are "+patron1.getActiveBooks());
+        // System.out.println("Active Books for user "+patron2.getName() + " are "+patron2.getActiveBooks());
     }
 }

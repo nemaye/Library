@@ -1,6 +1,9 @@
 package library.bookManagement;
 
-public class Book {
+import java.util.List;
+
+
+public class Book implements BookList, BookMap {
     private String title;
     private String author;
     private Genre genre;
@@ -8,6 +11,11 @@ public class Book {
     private int pages;
     private String ISBN;
     private int copies;
+    
+
+    public Book(){
+
+    }
 
     public Boolean isAvailaible() {
         return copies > 0;
@@ -65,6 +73,15 @@ public class Book {
         return copies;
     }
 
+    public int getCopies(String ISBN) {
+        for(Book book: books){
+            if(book.getISBN().equals(ISBN)){
+                return book.getCopies();
+            }
+        }
+        return 0;
+    }
+
     public void setCopies(int copies) {
         this.copies = copies;
     }
@@ -77,11 +94,52 @@ public class Book {
         this.pages = pages;
         this.ISBN = ISBN;
         this.copies = copies;
+
+        addBookToInventory(this);
+        bookMap.put(this.ISBN, this);
+    }
+
+    public Book(Book book){
+        this.title = book.title;
+        this.author = book.author;
+        this.genre = book.genre;
+        this.year = book.year;
+        this.pages = book.pages;
+        this.ISBN = book.ISBN;
+        this.copies = book.copies;    
+   
+        addBookToInventory(book);
+        bookMap.put(this.ISBN, book);
     }
 
     @Override
     public String toString() {
         return "Book [ISBN=" + ISBN + ", author=" + author + ", copies=" + copies + ", genre=" + genre + ", pages="
                 + pages + ", title=" + title + ", year=" + year + "]";
+    }
+
+    @Override
+    public void addBookToInventory(Book book) {
+        // TODO Auto-generated method stub
+        books.add(book);
+    }
+
+    @Override
+    public List<Book> getBooks() {
+        // TODO Auto-generated method stub
+        return books;
+    }
+
+    @Override
+    public Boolean bookExists(String ISBN) {
+        // TODO Auto-generated method stub
+
+        
+        for(Book book: books){
+            if(book.getISBN().equals(ISBN)){
+                return true;
+            }
+        }
+        return false;
     }
 }

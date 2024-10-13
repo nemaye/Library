@@ -1,23 +1,27 @@
 package library.patron;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import library.bookManagement.Book;
 
-public class Patron {
+public class Patron implements UserList{
         
     private int id;
     private String name;
     private String address;
     private String phone;
-    List<Book> history;
+    protected List<Book> history;
     protected List<Book> activeBooks = new ArrayList<Book>();
+    public static final HashMap<Integer,Patron> patronMap = new HashMap<>();
     
     public Patron(int id, String name, String address, String phone) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
+
+        patronMap.put(this.id, this);        
     }
 
 
@@ -26,9 +30,15 @@ public class Patron {
         this.name = patron.name;
         this.address = patron.address;
         this.phone = patron.phone;
+
+        patronMap.put(this.id, patron);
         //TODO Auto-generated constructor stub
     }
 
+    public Patron() {
+        // TODO Auto-generated constructor stub
+    }
+    
     public int getId() {
         return id;
     }
@@ -75,6 +85,32 @@ public class Patron {
 
     public List<Book> getActiveBooks() {
         return activeBooks;
+    }
+
+
+    @Override
+    public void addPatronToList(Patron patron) {
+        // TODO Auto-generated method stub
+        patronsList.add(patron);
+    }
+
+
+    @Override
+    public List<Patron> getPatrons() {
+        // TODO Auto-generated method stub
+        return patronsList;
+    }
+
+
+    @Override
+    public Boolean patronExists(int id) {
+        // TODO Auto-generated method stub
+        for(Patron patron: patronsList){
+            if(patron.getId() == id){
+                return true;
+            }
+        }
+        return false;
     }
 
 }
