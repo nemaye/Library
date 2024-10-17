@@ -46,7 +46,7 @@ public class App {
         @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("Choose an option: 1. Add Book 2. Add Patron 3. Issue Book 4. Return Book 5. View Patron History 6. Exit");
+            System.out.println("Choose an option: 1. Add Book 2. Add Patron 3. Issue Book 4. Return Book 5. View Patron Active Books 6. View Patron History 7. Exit");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
@@ -110,14 +110,60 @@ public class App {
                 }
             } else if (choice == 4) {
                 System.out.println("Returning Book...");
+                System.out.println("Enter Patron ID: ");
+                int patronId = scanner.nextInt();
+                scanner.nextLine(); // Consume newline
+                if(patron.patronExists(patronId)){
+                    patron = patron.getObjPatron(patronId);
+                    for(Book b: patron.getActiveBooks()){
+                        System.out.println("Recipient: "+patron.getName() + 
+                        " \nBook: "+b.getTitle() + 
+                        " \nISBN: "+b.getISBN() +
+                        " \nissueDate: "+b.getIssueDate() +
+                        " \nreturnDate: "+b.getReturnDate());
+                        System.out.println("_______________________________");
+                    }
+                    System.out.println("Enter Book ISBN: ");
+                    String isbn = scanner.nextLine();
+
+                    for(Book b: patron.getActiveBooks()){
+                        if(b.getISBN().equals(isbn)){
+                            System.out.println("Book found");
+                            IssueBook issueBook = new IssueBook();
+                            issueBook.returnToLibrary(patronId, isbn);
+                            break;
+                        }else{
+                            System.out.println("Book not found");
+                        }
+                    }
+                }else{
+                    System.out.println("No record of patron");
+                }
             } else if (choice == 5) {
                 System.out.println("Enter Patron ID: ");
                 int patronId = scanner.nextInt();
                 scanner.nextLine(); // Consume newline
                 patron = patron.getObjPatron(patronId);
-                System.out.println("Viewing patron history...");
-                System.out.println(patron.getActiveBooks());                
+                System.out.println("Viewing patron active book...");
+                for(Book b: patron.getActiveBooks()){
+                    System.out.println("Recipient: "+patron.getName() + 
+                    " \nBook: "+b.getTitle() + 
+                    " \nISBN: "+b.getISBN() +
+                    " \nissueDate: "+b.getIssueDate() +
+                    " \nreturnDate: "+b.getReturnDate());
+                    System.out.println("_______________________________");
+                }
+                // System.out.println(patron.getActiveBooks());                
             } else if (choice == 6) {
+                System.out.println("Enter Patron ID: ");
+                int patronId = scanner.nextInt();
+                patron = patron.getObjPatron(patronId);
+                System.out.println("Viewing patron history...");
+                scanner.nextLine(); // Consume newline
+                if(patron.patronExists(patronId)){
+                    System.out.println(patron.getHistory());
+                }
+            } else if (choice == 7) {
                 System.out.println("Exiting...");
                 break;
             } else {

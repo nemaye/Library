@@ -11,7 +11,7 @@ public class Patron implements UserList{
     private String name;
     private String address;
     private String phone;
-    protected List<Book> history;
+    protected List<Book> history = new ArrayList<Book>();
     protected List<Book> activeBooks = new ArrayList<Book>();
     public static final HashMap<Integer,Patron> patronMap = new HashMap<>();
     
@@ -71,12 +71,16 @@ public class Patron implements UserList{
         this.phone = phone;
     }
 
-    public void setHistory(List<Book> history) {
-        this.history = history;
+    public void setHistory(Book book) {
+        history.add(book);
     }
 
     public void setActiveBooks(Book book) {
         activeBooks.add(book);
+    }
+
+    public void removeActiveBooks(Book book){
+        activeBooks.remove(book);
     }
 
     public List<Book> getHistory() {

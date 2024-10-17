@@ -1,6 +1,7 @@
 package library.bookManagement;
 
 import java.util.List;
+import java.time.LocalDate;
 
 
 public class Book implements BookList, BookMap {
@@ -11,7 +12,24 @@ public class Book implements BookList, BookMap {
     private int pages;
     private String ISBN;
     private int copies;
-    
+    private LocalDate issueDate;
+    private LocalDate returnDate;
+
+    public LocalDate getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(LocalDate issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public LocalDate getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
+    }
 
     public Book(){
 
